@@ -6,4 +6,5 @@ from .schema import schema
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomGraphQLView(GraphQLView):
-    schema = schema
+    def __init__(self, **kwargs):
+        super().__init__(schema=schema, **kwargs)
