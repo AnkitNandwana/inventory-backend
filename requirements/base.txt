@@ -1,0 +1,10 @@
+Django>=4.2
+strawberry-graphql>=0.130
+strawberry-graphql-django>=0.13
+psycopg2-binary>=2.9
+python-dotenv>=1.0
+django-cors-headers>=3.13
+google-auth>=2.0
+pyjwt>=2.0
+celery>=5.2
+redis>=4.0

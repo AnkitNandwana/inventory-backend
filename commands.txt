@@ -1,0 +1,65 @@
+# create project root
+mkdir inventory-backend && cd inventory-backend
+
+# initialize git
+git init
+
+python3 -m venv .venv
+# activate it
+source .venv/bin/activate
+
+# confirm python points to venv
+which python
+python -V
+
+
+1️⃣ Create Django Project + Base Folders
+Run inside:
+
+(.venv) ~/projects/personal/inventory-backend$
+
+django-admin startproject config .
+mkdir apps
+mkdir docs
+mkdir worker
+mkdir requirements
+
+#Update your requirements.txt OR create modular:
+echo "Django>=4.2
+strawberry-graphql>=0.130
+strawberry-graphql-django>=0.13
+psycopg2-binary>=2.9
+python-dotenv>=1.0
+django-cors-headers>=3.13
+google-auth>=2.0
+pyjwt>=2.0
+celery>=5.2
+redis>=4.0" > requirements/base.txt
+
+#cd apps
+
+django-admin startapp auth_app
+django-admin startapp product
+django-admin startapp supplier
+django-admin startapp purchase
+django-admin startapp sales
+django-admin startapp inventory
+
+cd ..
+
+
+#setup database
+
+sudo -u postgres psql
+# inside psql:
+CREATE DATABASE inventory_db;
+CREATE USER inventory_user WITH PASSWORD 'inventory_user';
+GRANT ALL PRIVILEGES ON DATABASE inventory_db TO inventory_user;
+\q
+
+#Run migrations
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+#github => use below command to set remote url for personal account
+git remote set-url origin git@github.com-personal:AnkitNandwana/inventory-backend.git
