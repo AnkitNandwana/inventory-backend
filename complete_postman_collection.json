@@ -1,0 +1,430 @@
+{
+	"info": {
+		"name": "Inventory Backend - Complete GraphQL API",
+		"description": "Complete collection for all GraphQL endpoints: Products, Categories, Suppliers, Purchases, Sales, and Inventory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products & Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { categories { id name slug createdAt } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createCategory(input: { name: \\\"Electronics\\\", slug: \\\"electronics\\\" }) { id name slug createdAt } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { products { id sku name category { id name slug } costPrice sellingPrice currentStock lowStockThreshold isActive createdAt updatedAt } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createProduct(input: { sku: \\\"ELEC001\\\", name: \\\"Smartphone\\\", categoryId: 1, costPrice: \\\"200.00\\\", sellingPrice: \\\"299.99\\\", currentStock: 50, lowStockThreshold: 10 }) { id sku name category { name } costPrice sellingPrice currentStock } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products", "graphql", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "Get All Suppliers",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { suppliers { id name code contactPerson phone email address isActive createdAt } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/suppliers/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "suppliers", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Supplier by ID",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { supplier(id: 1) { id name code contactPerson phone email address isActive } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/suppliers/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "suppliers", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Supplier",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createSupplier(input: { name: \\\"Tech Supplies Inc\\\", code: \\\"TECH001\\\", contactPerson: \\\"John Doe\\\", phone: \\\"+1234567890\\\", email: \\\"john@techsupplies.com\\\", address: \\\"123 Tech Street\\\" }) { id name code contactPerson phone email } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/suppliers/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "suppliers", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Supplier",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { updateSupplier(id: 1, input: { phone: \\\"+1987654321\\\", email: \\\"newemail@techsupplies.com\\\" }) { id name phone email } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/suppliers/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "suppliers", "graphql", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "Get All Purchases",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { purchases { id supplier { name code } invoiceNo totalAmount status createdAt items { id product { name sku } qty unitCost lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/purchases/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "purchases", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Purchase by ID",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { purchase(id: 1) { id supplier { name } invoiceNo totalAmount status items { product { name } qty unitCost lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/purchases/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "purchases", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Purchase",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createPurchase(input: { supplierId: 1, invoiceNo: \\\"INV-001\\\", items: [{ productId: 1, qty: 10, unitCost: \\\"200.00\\\" }, { productId: 2, qty: 5, unitCost: \\\"150.00\\\" }] }) { id supplier { name } invoiceNo totalAmount items { product { name } qty unitCost lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/purchases/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "purchases", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Purchase Status",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { updatePurchase(id: 1, input: { status: \\\"RECEIVED\\\" }) { id status } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/purchases/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "purchases", "graphql", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Get All Sales",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { sales { id customerName totalAmount status createdAt items { id product { name sku } qty unitPrice lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/sales/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "sales", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Sale by ID",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { sale(id: 1) { id customerName totalAmount status items { product { name } qty unitPrice lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/sales/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "sales", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Sale",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createSale(input: { customerName: \\\"John Customer\\\", items: [{ productId: 1, qty: 2, unitPrice: \\\"299.99\\\" }, { productId: 2, qty: 1, unitPrice: \\\"199.99\\\" }] }) { id customerName totalAmount items { product { name } qty unitPrice lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/sales/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "sales", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Sale Status",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { updateSale(id: 1, input: { status: \\\"COMPLETED\\\" }) { id status } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/sales/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "sales", "graphql", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Get All Inventory Transactions",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { inventoryTransactions { id product { name sku } qty type referenceType unitCost createdAt note } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/inventory/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "inventory", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get All Stock Lots",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { stockLots { id product { name sku } qty unitCost remainingQty createdAt reference } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/inventory/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "inventory", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Product Stock Lots",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { productStockLots(productId: 1) { id qty unitCost remainingQty createdAt reference } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/inventory/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "inventory", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Inventory Transaction",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createInventoryTransaction(input: { productId: 1, qty: 10, type: \\\"IN\\\", referenceType: \\\"Purchase\\\", unitCost: \\\"200.00\\\", note: \\\"Stock received from supplier\\\" }) { id product { name } qty type referenceType unitCost note } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/inventory/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "inventory", "graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Create Stock Lot",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"mutation { createStockLot(input: { productId: 1, qty: 50, unitCost: \\\"200.00\\\", reference: \\\"PO-001\\\" }) { id product { name } qty unitCost remainingQty reference } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/inventory/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "inventory", "graphql", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Combined Queries (Main Endpoint)",
+			"item": [
+				{
+					"name": "Get Products with Categories",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { products { id sku name category { name } costPrice sellingPrice currentStock } categories { id name slug } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Complete Purchase Info",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { purchases { id supplier { name code } totalAmount status items { product { name sku category { name } } qty unitCost lineTotal } } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["graphql", ""]
+						}
+					}
+				},
+				{
+					"name": "Dashboard Summary",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"query\": \"query { products { id name currentStock lowStockThreshold } sales { id totalAmount status createdAt } purchases { id totalAmount status createdAt } }\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql/",
+							"host": ["{{base_url}}"],
+							"path": ["graphql", ""]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}

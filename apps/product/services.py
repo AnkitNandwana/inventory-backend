@@ -1,5 +1,5 @@
 from django.db import transaction
-from .models import Product, ProductCategory
+from .models import Product, Category
 
 class ProductService:
     @staticmethod
