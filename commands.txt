@@ -63,3 +63,47 @@ python3 manage.py migrate
 
 #github => use below command to set remote url for personal account
 git remote set-url origin git@github.com-personal:AnkitNandwana/inventory-backend.git
+
+
+#Create product models and define schema and migrations
+
+create this to rename tables as it generated wrong name
+python manage.py makemigrations product --empty -n rename_tables
+
+
+ python manage.py makemigrations product
+ python manage.py migrate
+ python manage.py makemigrations product --empty -n rename_tables
+ python manage.py migrate
+ python manage.py makemigrations supplier
+ python manage.py migrate
+ python manage.py makemigrations purchase
+ python manage.py migrate
+ rm apps/product/migrations/0003_rename_product*
+ python manage.py migrate product --fake
+ python manage.py migrate
+ git gui
+ dropdb inventory_db
+ createdb inventory_db
+ python manage.py migrate
+ ls apps/product/migrations
+ python manage.py migrate
+ python manage.py migrate --fake-initial
+ python manage.py migrate product
+ python manage.py makemigrations purchase
+ python manage.py migrate
+ git gui
+ dropdb inventory_db
+ createdb inventory_db
+ python manage.py migrate
+
+#apply and run migrations
+python manage.py makemigrations auth_app
+python manage.py makemigrations product
+python manage.py makemigrations supplier
+python manage.py makemigrations purchase
+python manage.py makemigrations sales
+python manage.py makemigrations inventory
+
+# Then apply all
+python manage.py migrate
