@@ -21,6 +21,7 @@ from .graphql_view import CustomGraphQLView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql/', CustomGraphQLView.as_view(), name='graphql'),
+    path('api/auth/', include('apps.auth_app.urls')),
     path('api/products/', include('apps.product.urls')),
     path('api/suppliers/', include('apps.supplier.urls')),
     path('api/purchases/', include('apps.purchase.urls')),
