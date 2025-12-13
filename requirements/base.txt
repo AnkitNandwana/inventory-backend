@@ -8,3 +8,6 @@ google-auth>=2.0
 pyjwt>=2.0
 celery>=5.2
 redis>=4.0
+kafka-python>=2.0.2
+channels>=4.0.0
+channels-redis>=4.1.0

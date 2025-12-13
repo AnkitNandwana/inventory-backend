@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'corsheaders',
     'strawberry_django',
     'apps.auth_app',
@@ -176,4 +177,37 @@ CORS_ALLOW_METHODS = [
 STRAWBERRY_DJANGO = {
     "FIELD_DESCRIPTION_FROM_HELP_TEXT": True,
     "TYPE_DESCRIPTION_FROM_MODEL_DOCSTRING": True,
+}
+
+# Channels and WebSocket settings
+ASGI_APPLICATION = 'config.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+# Kafka settings
+KAFKA_BOOTSTRAP_SERVERS = ['localhost:9092']
+KAFKA_STOCK_ALERTS_TOPIC = 'stock-alerts'
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'apps.inventory': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
 }
