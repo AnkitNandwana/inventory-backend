@@ -81,3 +81,55 @@ class StockAlertWebSocketConsumer(AsyncWebsocketConsumer):
         
         logger.info(f"✅ Stock alert delivered to WebSocket client {self.channel_name}: {message.get('sku')}")
         logger.info(f"📊 Alert data: {json.dumps(message, indent=2)}")
+
+
+class PurchaseSuggestionWebSocketConsumer(AsyncWebsocketConsumer):
+    """WebSocket consumer for real-time purchase order suggestions"""
+    
+    async def connect(self):
+        """Handle WebSocket connection"""
+        # Join purchase suggestions group
+        await self.channel_layer.group_add('purchase_suggestions', self.channel_name)
+        await self.accept()
+        logger.info(f"🛒 Purchase suggestion WebSocket client connected: {self.channel_name}")
+        
+        # Send welcome message
+        await self.send(text_data=json.dumps({
+            'type': 'connection_established',
+            'message': 'Connected to purchase suggestions stream',
+            'timestamp': datetime.now().isoformat()
+        }))
+    
+    async def disconnect(self, close_code):
+        """Handle WebSocket disconnection"""
+        await self.channel_layer.group_discard('purchase_suggestions', self.channel_name)
+        logger.info(f"🔌 Purchase suggestion WebSocket client disconnected: {self.channel_name}")
+    
+    async def receive(self, text_data):
+        """Handle messages from WebSocket client"""
+        try:
+            data = json.loads(text_data)
+            message_type = data.get('type')
+            
+            if message_type == 'ping':
+                await self.send(text_data=json.dumps({
+                    'type': 'pong',
+                    'timestamp': data.get('timestamp')
+                }))
+        except json.JSONDecodeError:
+            logger.error("Invalid JSON received from purchase suggestion WebSocket client")
+    
+    async def purchase_suggestion_message(self, event):
+        """Handle purchase suggestion messages from Kafka consumer"""
+        message = event['message']
+        
+        logger.info(f"🛒 Received purchase suggestion for WebSocket delivery: {message.get('sku')}")
+        
+        response_data = {
+            'type': 'purchase_suggestion',
+            'data': message,
+            'delivered_at': datetime.now().isoformat()
+        }
+        
+        await self.send(text_data=json.dumps(response_data))
+        logger.info(f"✅ Purchase suggestion delivered to WebSocket client: {message.get('sku')}")

@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a9rzn!k8ap1#uc%3zlu_vlc#0!y&$&!5aj=ze!^-175cr7aj18'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost"]
 
@@ -195,19 +195,34 @@ CHANNEL_LAYERS = {
 KAFKA_BOOTSTRAP_SERVERS = ['localhost:9092']
 KAFKA_STOCK_ALERTS_TOPIC = 'stock-alerts'
 
-# Logging configuration
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+# # Logging configuration
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'apps.inventory': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
+
+if DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {'class': 'logging.StreamHandler'},
         },
-    },
-    'loggers': {
-        'apps.inventory': {
-            'handlers': ['console'],
-            'level': 'INFO',
+        'loggers': {
+            'django.db.backends': {
+                'handlers': ['console'],
+                'level': 'DEBUG',
+            },
         },
-    },
-}
+    }
